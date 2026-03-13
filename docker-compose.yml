@@ -100,6 +100,13 @@ services:
       AIRFLOW__CORE__FERNET_KEY: ''
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+      AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+      AIRFLOW__SMTP__SMTP_PORT: 587
+      AIRFLOW__SMTP__SMTP_STARTTLS: 'true'
+      AIRFLOW__SMTP__SMTP_SSL: 'false'
+      AIRFLOW__SMTP__SMTP_USER: ${SMTP_USER:-your-email@gmail.com}
+      AIRFLOW__SMTP__SMTP_PASSWORD: ${SMTP_PASSWORD:-your-app-password}
+      AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SMTP_USER:-your-email@gmail.com}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -126,6 +133,13 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
       AIRFLOW__CORE__FERNET_KEY: ''
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+      AIRFLOW__SMTP__SMTP_PORT: 587
+      AIRFLOW__SMTP__SMTP_STARTTLS: 'true'
+      AIRFLOW__SMTP__SMTP_SSL: 'false'
+      AIRFLOW__SMTP__SMTP_USER: ${SMTP_USER:-your-email@gmail.com}
+      AIRFLOW__SMTP__SMTP_PASSWORD: ${SMTP_PASSWORD:-your-app-password}
+      AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SMTP_USER:-your-email@gmail.com}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs

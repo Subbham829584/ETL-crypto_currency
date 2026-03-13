@@ -1,0 +1,86 @@
+[2026-03-13T16:03:45.112+0000] {processor.py:186} INFO - Started process (PID=154) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:03:45.114+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:03:45.151+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:45.149+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:03:46.421+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:03:48.444+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.441+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG:crypto_producer
+[2026-03-13T16:03:48.454+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.454+0000] {override.py:1911} INFO - Created Permission View: can edit on DAG:crypto_producer
+[2026-03-13T16:03:48.457+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.457+0000] {override.py:1911} INFO - Created Permission View: can read on DAG:crypto_producer
+[2026-03-13T16:03:48.460+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.459+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG Run:crypto_producer
+[2026-03-13T16:03:48.461+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.461+0000] {override.py:1911} INFO - Created Permission View: menu access on DAG Run:crypto_producer
+[2026-03-13T16:03:48.463+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.463+0000] {override.py:1911} INFO - Created Permission View: can create on DAG Run:crypto_producer
+[2026-03-13T16:03:48.465+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.465+0000] {override.py:1911} INFO - Created Permission View: can read on DAG Run:crypto_producer
+[2026-03-13T16:03:48.465+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.465+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:03:48.476+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.476+0000] {dag.py:3262} INFO - Creating ORM DAG for crypto_producer
+[2026-03-13T16:03:48.490+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:03:48.490+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:02:00+00:00, run_after=2026-03-13 16:03:00+00:00
+[2026-03-13T16:03:48.507+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 3.426 seconds
+[2026-03-13T16:04:19.008+0000] {processor.py:186} INFO - Started process (PID=159) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:19.010+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:04:19.013+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:19.012+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:19.153+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:19.191+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:19.191+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:04:19.210+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:19.210+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:03:00+00:00, run_after=2026-03-13 16:04:00+00:00
+[2026-03-13T16:04:19.221+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.222 seconds
+[2026-03-13T16:04:49.530+0000] {processor.py:186} INFO - Started process (PID=164) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:49.532+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:04:49.541+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:49.540+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:49.676+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:04:49.716+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:49.716+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:04:49.745+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:04:49.745+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:03:00+00:00, run_after=2026-03-13 16:04:00+00:00
+[2026-03-13T16:04:50.015+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.492 seconds
+[2026-03-13T16:05:20.333+0000] {processor.py:186} INFO - Started process (PID=169) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:20.336+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:05:20.341+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:20.340+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:20.471+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:20.518+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:20.518+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:05:20.729+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:20.729+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:04:00+00:00, run_after=2026-03-13 16:05:00+00:00
+[2026-03-13T16:05:20.742+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.421 seconds
+[2026-03-13T16:05:51.033+0000] {processor.py:186} INFO - Started process (PID=174) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:51.037+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:05:51.041+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:51.041+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:51.172+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:05:51.212+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:51.211+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:05:51.441+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:05:51.441+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:04:00+00:00, run_after=2026-03-13 16:05:00+00:00
+[2026-03-13T16:05:51.453+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.428 seconds
+[2026-03-13T16:06:21.773+0000] {processor.py:186} INFO - Started process (PID=179) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:21.775+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:06:21.779+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:21.778+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:21.923+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:22.180+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:22.180+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:06:22.198+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:22.197+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:05:00+00:00, run_after=2026-03-13 16:06:00+00:00
+[2026-03-13T16:06:22.209+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.448 seconds
+[2026-03-13T16:06:52.596+0000] {processor.py:186} INFO - Started process (PID=184) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:52.598+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:06:52.603+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:52.602+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:52.763+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:06:52.804+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:52.804+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:06:52.829+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:06:52.829+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:05:00+00:00, run_after=2026-03-13 16:06:00+00:00
+[2026-03-13T16:06:52.840+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.258 seconds
+[2026-03-13T16:07:22.979+0000] {processor.py:186} INFO - Started process (PID=189) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:22.980+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:07:22.988+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:22.988+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:23.135+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:23.165+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:23.164+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:07:23.182+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:23.182+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:06:00+00:00, run_after=2026-03-13 16:07:00+00:00
+[2026-03-13T16:07:23.193+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.224 seconds
+[2026-03-13T16:07:53.918+0000] {processor.py:186} INFO - Started process (PID=194) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:53.919+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:07:53.922+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:53.921+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:54.042+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:07:54.072+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:54.072+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:07:54.092+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:07:54.092+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:06:00+00:00, run_after=2026-03-13 16:07:00+00:00
+[2026-03-13T16:07:54.268+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.358 seconds
+[2026-03-13T16:08:38.853+0000] {processor.py:186} INFO - Started process (PID=154) to work on /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:08:38.858+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/crypto_producer_dag.py for tasks to queue
+[2026-03-13T16:08:38.861+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:38.860+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:08:39.159+0000] {processor.py:925} INFO - DAG(s) 'crypto_producer' retrieved from /opt/airflow/dags/crypto_producer_dag.py
+[2026-03-13T16:08:39.335+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.334+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG:crypto_producer
+[2026-03-13T16:08:39.340+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.339+0000] {override.py:1911} INFO - Created Permission View: can edit on DAG:crypto_producer
+[2026-03-13T16:08:39.342+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.342+0000] {override.py:1911} INFO - Created Permission View: can read on DAG:crypto_producer
+[2026-03-13T16:08:39.344+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.344+0000] {override.py:1911} INFO - Created Permission View: menu access on DAG Run:crypto_producer
+[2026-03-13T16:08:39.346+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.346+0000] {override.py:1911} INFO - Created Permission View: can create on DAG Run:crypto_producer
+[2026-03-13T16:08:39.348+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.348+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG Run:crypto_producer
+[2026-03-13T16:08:39.351+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.350+0000] {override.py:1911} INFO - Created Permission View: can read on DAG Run:crypto_producer
+[2026-03-13T16:08:39.351+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.351+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-03-13T16:08:39.360+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.360+0000] {dag.py:3262} INFO - Creating ORM DAG for crypto_producer
+[2026-03-13T16:08:39.370+0000] {logging_mixin.py:190} INFO - [2026-03-13T16:08:39.370+0000] {dag.py:4180} INFO - Setting next_dagrun for crypto_producer to 2026-03-13 16:07:00+00:00, run_after=2026-03-13 16:08:00+00:00
+[2026-03-13T16:08:39.385+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/crypto_producer_dag.py took 0.540 seconds
