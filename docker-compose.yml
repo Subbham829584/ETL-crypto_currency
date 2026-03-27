@@ -246,7 +246,7 @@ services:
     image: apache/spark:3.5.1
     container_name: spark-analytics
     user: root
-    mem_limit: 2g
+    mem_limit: 4g
     depends_on:
       - spark-master
       - spark-worker
@@ -264,11 +264,10 @@ services:
           echo "Waiting for trigger..."
           sleep 300
             /opt/spark/bin/spark-submit \
-            --master spark://spark-master:7077 \
-            --total-executor-cores 1 \
-            --driver-memory 512m \
-            --executor-memory 512m \
-            --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262,org.postgresql:postgresql:42.7.5 \
+            --master local[2] \
+            --driver-memory 2g \
+            --conf spark.driver.memoryOverhead=512 \
+            --packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262,org.postgresql:postgresql:42.7.5 \
             /opt/spark-jobs/analytics.py
         done
     restart: on-failure

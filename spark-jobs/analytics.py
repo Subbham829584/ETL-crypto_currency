@@ -36,7 +36,7 @@ try:
            .withColumn("price", col("price").cast(DoubleType()))
 
     latest_data = df.filter(
-        col("timestamp") >= current_timestamp() - expr("INTERVAL 7 MINUTES")
+        col("timestamp") >= current_timestamp() - expr("INTERVAL 10 MINUTES")
     )
     row_count = latest_data.count()
 
@@ -49,8 +49,8 @@ try:
 
     # Price changes
     latest_data = latest_data \
-        .withColumn("price_1min_ago", lag("price", 2).over(coin_window)) \
-        .withColumn("price_5min_ago", lag("price", 10).over(coin_window)) \
+        .withColumn("price_1min_ago", lag("price", 1).over(coin_window)) \
+        .withColumn("price_5min_ago", lag("price", 5).over(coin_window)) \
         .withColumn(
             "change_1min",
             when(col("price_1min_ago").isNull(), None)
