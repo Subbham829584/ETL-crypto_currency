@@ -27,12 +27,12 @@ function fmtPrice(v) {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-slate-800 border border-slate-600 rounded-lg p-3 text-xs shadow-xl">
-      <p className="text-slate-400 mb-2">{fmtTime(label)}</p>
+    <div className="rounded-lg border border-slate-200 bg-white/95 p-3 text-xs shadow-xl">
+      <p className="mb-2 text-slate-500">{fmtTime(label)}</p>
       {payload.map(p => (
         <div key={p.dataKey} className="flex justify-between gap-4">
           <span style={{ color: p.color }}>{p.name}</span>
-          <span className="font-bold text-white">${fmtPrice(p.value)}</span>
+          <span className="font-bold text-slate-900">${fmtPrice(p.value)}</span>
         </div>
       ))}
     </div>
@@ -52,11 +52,11 @@ export default function PriceChart({ coinId }) {
   }, [coinId, window])
 
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700 p-5">
+    <div className="panel p-5">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="font-bold text-white capitalize">{coinId}</h2>
-          <p className="text-xs text-slate-400">Price · SMA · EMA</p>
+          <h2 className="title-serif text-2xl capitalize text-slate-900">{coinId}</h2>
+          <p className="text-xs text-slate-600">Price · SMA · EMA</p>
         </div>
         <div className="flex gap-1">
           {WINDOWS.map(w => (
@@ -65,8 +65,8 @@ export default function PriceChart({ coinId }) {
               onClick={() => setWindow(w.value)}
               className={`text-xs px-3 py-1 rounded-md font-medium transition-all ${
                 window === w.value
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                  ? 'bg-sky-100 text-sky-700 border border-sky-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
               {w.label}
@@ -82,7 +82,7 @@ export default function PriceChart({ coinId }) {
       ) : (
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#dbe5f2" />
             <XAxis
               dataKey="timestamp"
               tickFormatter={fmtTime}
@@ -101,19 +101,19 @@ export default function PriceChart({ coinId }) {
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend
-              wrapperStyle={{ fontSize: 12, color: '#94a3b8' }}
+              wrapperStyle={{ fontSize: 12, color: '#475569' }}
             />
             <Line
               type="monotone" dataKey="price" name="Price"
-              stroke="#6366f1" strokeWidth={2} dot={false} activeDot={{ r: 4 }}
+              stroke="#2e6fdb" strokeWidth={2.25} dot={false} activeDot={{ r: 4 }}
             />
             <Line
               type="monotone" dataKey="sma" name="SMA"
-              stroke="#f59e0b" strokeWidth={1.5} dot={false} strokeDasharray="4 2"
+              stroke="#d8903f" strokeWidth={1.6} dot={false} strokeDasharray="4 2"
             />
             <Line
               type="monotone" dataKey="ema" name="EMA"
-              stroke="#10b981" strokeWidth={1.5} dot={false} strokeDasharray="4 2"
+              stroke="#157957" strokeWidth={1.6} dot={false} strokeDasharray="4 2"
             />
           </LineChart>
         </ResponsiveContainer>

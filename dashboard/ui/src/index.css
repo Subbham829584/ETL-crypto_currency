@@ -1,13 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #0f172a;
-  color: #f1f5f9;
-  font-family: 'Inter', system-ui, sans-serif;
+:root {
+  --bg: #f6f1e7;
+  --bg-soft: #fbf8f1;
+  --ink: #1d2b43;
+  --muted: #5f6f84;
+  --line: rgba(47, 74, 111, 0.16);
+  --panel: rgba(255, 255, 255, 0.74);
+  --panel-strong: rgba(255, 255, 255, 0.9);
+  --up: #157957;
+  --down: #c9455b;
+  --accent: #2e6fdb;
+  --accent-warm: #d8903f;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #1e293b; }
-::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Manrope", "Avenir Next", sans-serif;
+  background:
+    radial-gradient(780px 420px at -8% -12%, #f3c797 0%, transparent 72%),
+    radial-gradient(760px 380px at 108% -12%, #cadbf8 0%, transparent 72%),
+    linear-gradient(165deg, #f9f3e8 0%, #eff4fb 48%, #f5f7fa 100%);
+}
+
+.title-serif {
+  font-family: "Fraunces", serif;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(20, 39, 70, 0.04) 0.4px, transparent 0.4px);
+  background-size: 3px 3px;
+  pointer-events: none;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 14px 40px rgba(28, 40, 64, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.panel-strong {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+}
+
+.metric-tile {
+  border: 1px solid rgba(45, 69, 107, 0.18);
+  background: linear-gradient(175deg, rgba(255, 255, 255, 0.9), rgba(249, 251, 255, 0.65));
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  padding: 4px 10px;
+  font-weight: 600;
+}
+
+.chip-live {
+  color: var(--up);
+  background: rgba(22, 141, 98, 0.12);
+}
+
+.chip-risk {
+  color: var(--down);
+  background: rgba(201, 69, 91, 0.12);
+}
+
+.fade-up {
+  animation: fade-up 420ms ease-out;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: rgba(215, 225, 241, 0.6); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(82, 110, 154, 0.62); border-radius: 99px; }

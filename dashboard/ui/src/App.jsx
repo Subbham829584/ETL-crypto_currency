@@ -16,8 +16,11 @@ function useApi(url, deps = []) {
     try {
       const res = await axios.get(url)
       setData(res.data)
-    } catch { /* keep previous data on error */ }
-    finally { setLoading(false) }
+    } catch {
+      // keep previous value
+    } finally {
+      setLoading(false)
+    }
   }, [url])
 
   useEffect(() => { fetch() }, [fetch, ...deps])
@@ -26,87 +29,117 @@ function useApi(url, deps = []) {
     return () => clearInterval(id)
   }, [fetch])
 
-  return { data, loading, refresh: fetch }
+  return { data, loading }
+}
+
+function formatLag(seconds) {
+  if (seconds === null || seconds === undefined) return 'n/a'
+  if (seconds < 60) return `${Math.round(seconds)} sec`
+  if (seconds < 3600) return `${Math.round(seconds / 60)} min`
+  return `${(seconds / 3600).toFixed(1)} hr`
+}
+
+function fmtMetric(value, digits = 2) {
+  if (value === null || value === undefined) return 'n/a'
+  if (typeof value === 'number') return value.toLocaleString('en-US', { maximumFractionDigits: digits })
+  return value
 }
 
 export default function App() {
   const [selectedCoin, setSelectedCoin] = useState('bitcoin')
   const [lastRefresh, setLastRefresh] = useState(new Date())
 
-  const { data: coins }    = useApi('/api/coins/latest')
-  const { data: gainers }  = useApi('/api/gainers')
-  const { data: losers }   = useApi('/api/losers')
-  const { data: alerts }   = useApi('/api/alerts')
+  const { data: coins } = useApi('/api/coins/latest')
+  const { data: gainers } = useApi('/api/gainers')
+  const { data: losers } = useApi('/api/losers')
+  const { data: alerts } = useApi('/api/alerts')
   const { data: pipeline } = useApi('/api/pipeline')
-  const { data: stats }    = useApi('/api/stats')
+  const { data: stats } = useApi('/api/stats')
+  const { data: health } = useApi('/api/health')
+  const { data: anomalies } = useApi('/api/anomalies?minutes=120&zscore=2.5')
+  const { data: summary } = useApi(`/api/coins/${selectedCoin}/summary?minutes=180`, [selectedCoin])
 
   useEffect(() => {
     const id = setInterval(() => setLastRefresh(new Date()), REFRESH_MS)
     return () => clearInterval(id)
   }, [])
 
-  const totalCoins    = coins?.length ?? 0
-  const lastUpdated   = stats?.last_updated ? new Date(stats.last_updated).toLocaleTimeString() : '—'
-  const pipelineOk    = pipeline?.every(t => t.status === 'success')
+  const pipelineOk = pipeline?.every((t) => t.status === 'success')
+  const heroBadgeClass = pipelineOk ? 'chip chip-live' : 'chip chip-risk'
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100">
-      {/* ── Header ── */}
-      <header className="border-b border-slate-700 bg-slate-800/60 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">📈</span>
+    <div className="app-shell grain-overlay px-4 py-5 sm:px-6 lg:px-10">
+      <header className="panel fade-up relative overflow-hidden p-6 md:p-8">
+        <div className="absolute -right-24 -top-20 h-48 w-48 rounded-full bg-[#ffe0b9]/60 blur-2xl" />
+        <div className="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-[#c7dbff]/60 blur-2xl" />
+        <div className="relative z-10">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-700">Market Intelligence Desk</p>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-xl font-bold text-white tracking-tight">MarketFlow</h1>
-              <p className="text-xs text-slate-400">Crypto Analytics Dashboard</p>
+              <h1 className="title-serif text-4xl leading-tight text-slate-900 md:text-5xl">MarketFlow Atlas</h1>
+              <p className="mt-2 max-w-2xl text-sm muted">
+                Elegant real-time crypto analytics with operational telemetry from Airflow, Kafka and Spark.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={heroBadgeClass}>{pipelineOk ? 'Pipeline Healthy' : 'Pipeline Degraded'}</span>
+              <span className="chip muted">Data Lag: {formatLag(health?.data_lag_seconds)}</span>
+              <span className="chip muted">Refresh: {lastRefresh.toLocaleTimeString()}</span>
             </div>
           </div>
-
-          <div className="flex items-center gap-6 text-sm">
-            <div className="text-center">
-              <p className="text-slate-400 text-xs">Coins Tracked</p>
-              <p className="font-bold text-white">{totalCoins}</p>
+          <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="metric-tile rounded-xl p-3.5">
+              <p className="text-[10px] uppercase tracking-[0.18em] muted">Coins</p>
+              <p className="mt-1 text-xl font-bold text-slate-900">{coins?.length ?? 0}</p>
             </div>
-            <div className="text-center">
-              <p className="text-slate-400 text-xs">Last Data</p>
-              <p className="font-bold text-white">{lastUpdated}</p>
+            <div className="metric-tile rounded-xl p-3.5">
+              <p className="text-[10px] uppercase tracking-[0.18em] muted">Last Data</p>
+              <p className="mt-1 text-lg font-semibold text-slate-900">
+                {stats?.last_updated ? new Date(stats.last_updated).toLocaleTimeString() : 'n/a'}
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-slate-400 text-xs">Pipeline</p>
-              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${pipelineOk ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
-                {pipelineOk ? '● Live' : '● Degraded'}
-              </span>
+            <div className="metric-tile rounded-xl p-3.5">
+              <p className="text-[10px] uppercase tracking-[0.18em] muted">3h Net</p>
+              <p className={`mt-1 text-lg font-semibold ${summary?.net_change_pct >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+                {summary?.net_change_pct === null || summary?.net_change_pct === undefined
+                  ? 'n/a'
+                  : `${summary.net_change_pct > 0 ? '+' : ''}${summary.net_change_pct}%`}
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-slate-400 text-xs">Refreshes</p>
-              <p className="font-bold text-white">{lastRefresh.toLocaleTimeString()}</p>
+            <div className="metric-tile rounded-xl p-3.5">
+              <p className="text-[10px] uppercase tracking-[0.18em] muted">Avg Volatility</p>
+              <p className="mt-1 text-lg font-semibold text-slate-900">{fmtMetric(summary?.avg_volatility, 4)}</p>
+            </div>
+            <div className="metric-tile rounded-xl p-3.5">
+              <p className="text-[10px] uppercase tracking-[0.18em] muted">Anomalies</p>
+              <p className="mt-1 text-lg font-semibold text-slate-900">{anomalies?.length ?? 0}</p>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-screen-2xl mx-auto px-6 py-6 space-y-6">
-        {/* ── Coin cards grid ── */}
-        <section>
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Live Prices</h2>
+      <main className="mx-auto mt-6 max-w-[1600px] space-y-6">
+        <section className="panel p-5">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="title-serif text-2xl text-slate-900">Live Ticker Board</h2>
+            <p className="text-xs muted">Tap a coin to focus chart + summary</p>
+          </div>
           <CoinGrid coins={coins} selectedCoin={selectedCoin} onSelect={setSelectedCoin} />
         </section>
 
-        {/* ── Chart + Top Movers ── */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="xl:col-span-2">
             <PriceChart coinId={selectedCoin} />
           </div>
-          <div>
-            <TopMovers gainers={gainers} losers={losers} />
-          </div>
-        </div>
+          <TopMovers gainers={gainers} losers={losers} />
+        </section>
 
-        {/* ── Alerts + Pipeline ── */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          <AlertsFeed alerts={alerts} />
+        <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <div className="xl:col-span-2">
+            <AlertsFeed alerts={alerts} />
+          </div>
           <PipelineStatus pipeline={pipeline} />
-        </div>
+        </section>
       </main>
     </div>
   )

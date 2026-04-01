@@ -7,17 +7,17 @@ function fmtPrice(v) {
 
 function MoverRow({ rank, id, symbol, price, change_5min, positive }) {
   return (
-    <div className="flex items-center justify-between py-2.5 border-b border-slate-700/50 last:border-0">
+    <div className="flex items-center justify-between py-2.5 border-b border-slate-200 last:border-0">
       <div className="flex items-center gap-3">
-        <span className="text-slate-500 text-xs w-4">{rank}</span>
+        <span className="w-4 text-xs text-slate-500">{rank}</span>
         <div>
-          <p className="text-sm font-semibold text-white uppercase">{symbol}</p>
-          <p className="text-xs text-slate-400 capitalize">{id}</p>
+          <p className="text-sm font-semibold text-slate-900 uppercase">{symbol}</p>
+          <p className="text-xs text-slate-500 capitalize">{id}</p>
         </div>
       </div>
       <div className="text-right">
-        <p className="text-sm font-semibold text-white">{fmtPrice(price)}</p>
-        <p className={`text-xs font-bold ${positive ? 'text-emerald-400' : 'text-red-400'}`}>
+        <p className="text-sm font-semibold text-slate-900">{fmtPrice(price)}</p>
+        <p className={`text-xs font-bold ${positive ? 'text-emerald-700' : 'text-rose-700'}`}>
           {positive ? '+' : ''}{change_5min?.toFixed(2)}%
         </p>
       </div>
@@ -26,7 +26,7 @@ function MoverRow({ rank, id, symbol, price, change_5min, positive }) {
 }
 
 function Section({ title, data, positive }) {
-  const color = positive ? 'text-emerald-400' : 'text-red-400'
+  const color = positive ? 'text-emerald-700' : 'text-rose-700'
   const icon  = positive ? '▲' : '▼'
   return (
     <div>
@@ -48,11 +48,11 @@ function Section({ title, data, positive }) {
 
 export default function TopMovers({ gainers, losers }) {
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700 p-5 h-full">
-      <h2 className="font-bold text-white mb-4">Top Movers <span className="text-slate-400 font-normal text-sm">(5 min)</span></h2>
+    <div className="panel h-full p-5">
+      <h2 className="title-serif mb-4 text-2xl text-slate-900">Top Movers <span className="font-normal text-sm text-slate-500">(5 min)</span></h2>
       <div className="space-y-5">
         <Section title="Gainers" data={gainers} positive={true} />
-        <div className="border-t border-slate-700" />
+        <div className="border-t border-slate-200" />
         <Section title="Losers"  data={losers}  positive={false} />
       </div>
     </div>

@@ -1,4 +1,5 @@
 import sys
+import os
 import psycopg2
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
@@ -10,22 +11,32 @@ from pyspark.sql.types import DoubleType
 
 spark = SparkSession.builder \
     .appName("CryptoAnalytics") \
-    .config("spark.hadoop.fs.s3a.endpoint", "http://minio:9000") \
-    .config("spark.hadoop.fs.s3a.access.key", "minioadmin") \
-    .config("spark.hadoop.fs.s3a.secret.key", "minioadmin") \
+    .config("spark.hadoop.fs.s3a.endpoint", os.getenv("MINIO_ENDPOINT", "http://minio:9000")) \
+    .config("spark.hadoop.fs.s3a.access.key", os.getenv("MINIO_ACCESS_KEY")) \
+    .config("spark.hadoop.fs.s3a.secret.key", os.getenv("MINIO_SECRET_KEY")) \
     .config("spark.hadoop.fs.s3a.path.style.access", "true") \
     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")
 
-DB_CONN = dict(host="postgres", port=5432, dbname="crypto_metrics", user="postgres", password="admin")
-JDBC_URL = "jdbc:postgresql://postgres:5432/crypto_metrics"
-DB_PROPS = {"user": "postgres", "password": "admin", "driver": "org.postgresql.Driver"}
+DB_CONN = dict(
+    host=os.getenv("POSTGRES_HOST", "postgres"),
+    port=int(os.getenv("POSTGRES_PORT", "5432")),
+    dbname=os.getenv("POSTGRES_DB", "crypto_metrics"),
+    user=os.getenv("POSTGRES_USER", "postgres"),
+    password=os.getenv("POSTGRES_PASSWORD"),
+)
 
-PARQUET_PATH = "s3a://crypto-data/parquet/"
-RETENTION_DAYS = 7
-ALERT_THRESHOLD_PCT = 2.0
+PARQUET_PATH = os.getenv("PARQUET_PATH", "s3a://crypto-data/parquet/")
+RETENTION_DAYS = int(os.getenv("RETENTION_DAYS", "7"))
+ALERT_THRESHOLD_PCT = float(os.getenv("ALERT_THRESHOLD_PCT", "2.0"))
+
+if not os.getenv("MINIO_ACCESS_KEY") or not os.getenv("MINIO_SECRET_KEY"):
+    raise ValueError("MINIO_ACCESS_KEY and MINIO_SECRET_KEY must be set.")
+
+if not DB_CONN["password"]:
+    raise ValueError("POSTGRES_PASSWORD must be set.")
 
 
 def pg_conn():

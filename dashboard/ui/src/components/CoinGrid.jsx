@@ -1,18 +1,16 @@
 const fmt = (price) => {
-  if (price === null || price === undefined) return '—'
+  if (price === null || price === undefined) return 'n/a'
   if (price < 0.001) return price.toExponential(2)
-  if (price < 1)     return price.toFixed(4)
-  if (price < 100)   return price.toFixed(2)
+  if (price < 1) return price.toFixed(4)
+  if (price < 100) return price.toFixed(2)
   return price.toLocaleString('en-US', { maximumFractionDigits: 2 })
 }
 
-const pct = (v) => v === null || v === undefined ? null : v
-
-function Changebadge({ value }) {
-  if (value === null || value === undefined) return <span className="text-slate-500 text-xs">—</span>
+function ChangeBadge({ value }) {
+  if (value === null || value === undefined) return <span className="text-xs text-slate-400">n/a</span>
   const pos = value >= 0
   return (
-    <span className={`text-xs font-semibold ${pos ? 'text-emerald-400' : 'text-red-400'}`}>
+    <span className={`text-xs font-semibold ${pos ? 'text-emerald-700' : 'text-rose-700'}`}>
       {pos ? '+' : ''}{value.toFixed(2)}%
     </span>
   )
@@ -20,64 +18,55 @@ function Changebadge({ value }) {
 
 function CoinCard({ coin, selected, onClick }) {
   const change = coin.change_5min
-  const borderColor = selected
-    ? 'border-indigo-500'
-    : change === null ? 'border-slate-700'
-    : change >= 0 ? 'border-emerald-800' : 'border-red-900'
+  const glow = selected
+    ? 'border-sky-500/70 shadow-[0_10px_24px_rgba(70,120,189,0.22)] -translate-y-0.5'
+    : 'border-slate-300/80 hover:border-sky-300'
 
   return (
     <button
       onClick={onClick}
-      className={`bg-slate-800 rounded-xl p-4 border ${borderColor} text-left hover:bg-slate-700 transition-all w-full`}
+      className={`w-full rounded-xl border bg-white/70 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 ${glow}`}
     >
-      <div className="flex items-center justify-between mb-2">
+      <div className="mb-2 flex items-center justify-between">
         <div>
-          <p className="text-xs text-slate-400 uppercase tracking-wider">{coin.symbol}</p>
-          <p className="text-sm font-semibold text-white capitalize truncate max-w-[80px]">{coin.id}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-slate-500">{coin.symbol}</p>
+          <p className="max-w-[95px] truncate text-sm font-semibold capitalize text-slate-900">{coin.id}</p>
         </div>
-        {change !== null && (
-          <span className={`text-xs px-1.5 py-0.5 rounded font-bold ${change >= 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
-            {change >= 0 ? '▲' : '▼'}
+        {change !== null && change !== undefined && (
+          <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${change >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+            {change >= 0 ? 'UP' : 'DN'}
           </span>
         )}
       </div>
-      <p className="text-lg font-bold text-white">${fmt(coin.price)}</p>
-      <div className="flex gap-3 mt-1">
+      <p className="text-lg font-semibold text-slate-900">${fmt(coin.price)}</p>
+      <div className="mt-1 flex gap-3">
         <div>
           <p className="text-[10px] text-slate-500">1m</p>
-          <Changebage value={coin.change_1min} />
+          <ChangeBadge value={coin.change_1min} />
         </div>
         <div>
           <p className="text-[10px] text-slate-500">5m</p>
-          <Changebage value={coin.change_5min} />
+          <ChangeBadge value={coin.change_5min} />
         </div>
       </div>
     </button>
   )
 }
 
-function Changebage({ value }) {
-  if (value === null || value === undefined) return <span className="text-slate-500 text-xs">—</span>
-  const pos = value >= 0
-  return (
-    <span className={`text-xs font-semibold ${pos ? 'text-emerald-400' : 'text-red-400'}`}>
-      {pos ? '+' : ''}{value.toFixed(2)}%
-    </span>
-  )
-}
-
 export default function CoinGrid({ coins, selectedCoin, onSelect }) {
-  if (!coins) return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-10 gap-3">
-      {Array(20).fill(0).map((_, i) => (
-        <div key={i} className="bg-slate-800 rounded-xl p-4 border border-slate-700 animate-pulse h-24" />
-      ))}
-    </div>
-  )
+  if (!coins) {
+    return (
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-10">
+        {Array(20).fill(0).map((_, i) => (
+          <div key={i} className="h-24 animate-pulse rounded-xl border border-slate-300 bg-white/70 p-4" />
+        ))}
+      </div>
+    )
+  }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-10 gap-3">
-      {coins.map(coin => (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-10">
+      {coins.map((coin) => (
         <CoinCard
           key={coin.id}
           coin={coin}

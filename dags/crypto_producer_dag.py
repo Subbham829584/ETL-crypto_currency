@@ -37,8 +37,8 @@ from airflow.utils.email import send_email
 # ════════════════════════════════════════════
 
 
-KAFKA_BROKER = "kafka:9092"
-KAFKA_TOPIC = "crypto-prices"
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "crypto-prices")
 
 
 POSTGRES_CONN = {
@@ -55,14 +55,19 @@ ALERT_EMAIL = os.getenv("ALERT_EMAIL")
 
 
 COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets"
-PARAMS = {
-   "vs_currency": "usd",
-   "ids": ",".join([
+COINGECKO_API_HEADER = os.getenv("COINGECKO_API_HEADER", "x-cg-demo-api-key")
+COINGECKO_IDS = os.getenv(
+   "COINGECKO_IDS",
+   ",".join([
        "bitcoin", "ethereum", "solana", "cardano", "ripple",
        "dogecoin", "polkadot", "binancecoin", "avalanche", "chainlink",
        "polygon", "cosmos", "uniswap", "litecoin", "stellar",
        "vechain", "shiba-inu", "tron", "tezos", "neo",
-   ]),
+   ])
+)
+PARAMS = {
+   "vs_currency": "usd",
+   "ids": COINGECKO_IDS,
    "order": "market_cap_desc",
    "per_page": 20,
    "page": 1,
@@ -77,7 +82,7 @@ DESIRED_KEYS = [
 ]
 
 
-EXPECTED_COIN_COUNT = 20
+EXPECTED_COIN_COUNT = int(os.getenv("EXPECTED_COIN_COUNT", "20"))
 
 
 logger = logging.getLogger(__name__)
@@ -151,7 +156,8 @@ def on_success_callback(context):
    subject = f"DAG Success: {dag_id}"
    body = f"<h3>DAG {dag_id} completed successfully</h3><p>Execution date: {exec_date}</p>"
    try:
-       send_email(to=[ALERT_EMAIL], subject=subject, html_content=body)
+       if ALERT_EMAIL:
+           send_email(to=[ALERT_EMAIL], subject=subject, html_content=body)
    except Exception as e:
        logger.error(f"Failed to send success email: {e}")
    logger.info(f"DAG SUCCESS: {dag_id} at {exec_date}")
@@ -219,7 +225,7 @@ def fetch_and_push(**context):
 
        try:
            # Fetch from CoinGecko (Pro API with key)
-           headers = {"x-cg-demo-api-key": API_KEY}
+           headers = {COINGECKO_API_HEADER: API_KEY} if API_KEY else {}
            response = requests.get(COINGECKO_URL, params=PARAMS, headers=headers, timeout=15)
            response.raise_for_status()
            data = response.json()
@@ -427,8 +433,8 @@ def log_run_summary(**context):
 default_args  ={
     "owner" :"airflow",
     "retries" : 3,
-    "retry_delays" : timedelta(seconds= 15),
-    "email" : {ALERT_EMAIL},
+    "retry_delay" : timedelta(seconds= 15),
+    "email" : [ALERT_EMAIL] if ALERT_EMAIL else [],
     "email_on_failure" : True ,
     "email_on_retry" : True ,
     "email_on_success" : True ,

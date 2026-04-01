@@ -111,12 +111,15 @@ services:
       AIRFLOW__SMTP__SMTP_PASSWORD: ${SMTP_PASSWORD}
       AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SMTP_USER}
       API_KEY: ${API_KEY}
+      COINGECKO_API_HEADER: ${COINGECKO_API_HEADER:-x-cg-demo-api-key}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       ALERT_EMAIL: ${ALERT_EMAIL}
+      KAFKA_BROKER: ${KAFKA_BROKER:-kafka:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-crypto-prices}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -151,12 +154,15 @@ services:
       AIRFLOW__SMTP__SMTP_PASSWORD: ${SMTP_PASSWORD}
       AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SMTP_USER}
       API_KEY: ${API_KEY}
+      COINGECKO_API_HEADER: ${COINGECKO_API_HEADER:-x-cg-demo-api-key}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       ALERT_EMAIL: ${ALERT_EMAIL}
+      KAFKA_BROKER: ${KAFKA_BROKER:-kafka:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-crypto-prices}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -228,6 +234,14 @@ services:
      - spark-worker
      - kafka
      - minio
+   environment:
+     MINIO_ENDPOINT: ${MINIO_ENDPOINT:-http://minio:9000}
+     MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+     MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin}
+     KAFKA_BROKER: ${KAFKA_BROKER:-kafka:9092}
+     KAFKA_TOPIC: ${KAFKA_TOPIC:-crypto-prices}
+     PARQUET_PATH: ${PARQUET_PATH:-s3a://crypto-data/parquet/}
+     CHECKPOINT_PATH: ${CHECKPOINT_PATH:-s3a://crypto-data/checkpoints/}
    volumes:
      - ./spark-jobs:/opt/spark-jobs
      - spark-ivy-cache:/home/spark/.ivy2
@@ -252,6 +266,18 @@ services:
       - spark-worker
       - minio
       - postgres
+    environment:
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT:-http://minio:9000}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PARQUET_PATH: ${PARQUET_PATH:-s3a://crypto-data/parquet/}
+      RETENTION_DAYS: ${RETENTION_DAYS:-7}
+      ALERT_THRESHOLD_PCT: ${ALERT_THRESHOLD_PCT:-2.0}
     volumes:
       - ./spark-jobs:/opt/spark-jobs
       - spark-ivy-cache:/home/spark/.ivy2
@@ -292,6 +318,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:8000}
     restart: on-failure
 
   dashboard-ui:
